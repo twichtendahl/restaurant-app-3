@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">RestaurantApp3</string>
+    <string name="cheeseburger">Cheeseburger</string>
+    <string name="classic_burger">Classic Burger</string>
+    <string name="cheeseburger_description">Our take on an American favorite, with house sauce and brioche</string>
+    <string name="cheeseburger_price">7.99</string>
+    <string name="add_to_order">+</string>
+    <string name="remove_from_order">-</string>
+    <string name="starting_quantity">Qty: 0</string>
+</resources>

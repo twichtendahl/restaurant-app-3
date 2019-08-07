@@ -23,4 +23,13 @@
     <string name="csc">CSC:</string>
     <string name="expiration_label">Expiration (mm/yy):</string>
     <string name="send_order">Send Order</string>
+    <string name="thank_you">Thank you for placing your order.</string>
+    <string name="creditConfirmLabel">Credit #:</string>
+    <string name="sample_confirmation_code">JS08R44PQ888F0OQ</string>
+    <string name="order_confirmation_code">Order Confirmation Code:</string>
+    <string name="sample_credit_card">0000000000001234</string>
+    <string name="csc_label">CSC:</string>
+    <string name="sample_csc">012</string>
+    <string name="confirm_expiration_date_label">Exp:</string>
+    <string name="sample_expiry">09/19</string>
 </resources>

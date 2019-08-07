@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 if(order.getItems().isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Please select at least one item.", Toast.LENGTH_LONG).show();
                 } else {
+
                     Intent intent = new Intent(MainActivity.this, OrderDisplay.class);
                     intent.putExtra(ORDER_KEY, order);
                     startActivity(intent);

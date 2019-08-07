@@ -35,9 +35,8 @@ public class Order implements Parcelable {
     }
 
     public void addItems(List<RestaurantItem> items) {
-        Iterator<RestaurantItem> iterator = items.iterator();
-        while(iterator.hasNext()) {
-            items.add(iterator.next());
+        for(RestaurantItem item : items) {
+            addItem(item);
         }
     }
 
@@ -95,6 +94,17 @@ public class Order implements Parcelable {
 
     public String formattedCountOf(RestaurantItem item) {
         return "Qty: " + countThisItem(item);
+    }
+
+    @Override
+    public String toString() {
+        String orderAsString = "";
+        Iterator<RestaurantItem> iterator = items.iterator();
+        while(iterator.hasNext()) {
+            RestaurantItem item = iterator.next();
+            orderAsString += item.toString() + "\n";
+        }
+        return orderAsString.trim();
     }
 
 

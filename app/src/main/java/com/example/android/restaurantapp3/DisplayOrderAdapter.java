@@ -17,19 +17,15 @@ import java.util.Locale;
 
 public class DisplayOrderAdapter extends RecyclerView.Adapter<DisplayOrderAdapter.ViewHolder> {
 
-    private Order mOrder;
+    private List<RestaurantItem> mItems;
     private Context mContext;
-    private static List<RestaurantItem> mItems;
+    private Order mOrder;
 
-    public DisplayOrderAdapter(Order mOrder, Context mContext) {
-        this.mOrder = mOrder;
+    public DisplayOrderAdapter(List<RestaurantItem> mItems, Context mContext) {
+        this.mItems = mItems;
         this.mContext = mContext;
-        mItems = new ArrayList<>();
-        Iterator<RestaurantItem> iterator = getmOrder().getItems().iterator();
-        while(iterator.hasNext()) {
-            mItems.add(iterator.next());
-        }
-
+        mOrder = new Order();
+        mOrder.addItems(mItems);
     }
 
     public Order getmOrder() {

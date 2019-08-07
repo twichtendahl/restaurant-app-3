@@ -1,11 +1,14 @@
 package com.example.android.restaurantapp3.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
-public class Order {
+public class Order implements Parcelable {
 
     private static double DEFAULT_TAX = 10.5;
     private static double DEFAULT_TIP = 0.0;
@@ -39,6 +42,18 @@ public class Order {
     }
 
     public void removeItem(RestaurantItem item) { items.remove(item); }
+
+    public int getCountOf(String itemName) {
+        int count = 0;
+        Iterator<RestaurantItem> iterator = items.iterator();
+        while(iterator.hasNext()) {
+            RestaurantItem item = iterator.next();
+            if(item.getItemName().equals(itemName)) count++;
+        }
+        return count;
+    }
+
+    public String getFormattedCountOf(String itemName) { return "Qty: " + getCountOf(itemName); }
 
     public double getSubtotal() {
         double subtotal = 0.0;
@@ -83,4 +98,29 @@ public class Order {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(this.items);
+    }
+
+    protected Order(Parcel in) {
+        this.items = in.createTypedArrayList(RestaurantItem.CREATOR);
+    }
+
+    public static final Parcelable.Creator<Order> CREATOR = new Parcelable.Creator<Order>() {
+        @Override
+        public Order createFromParcel(Parcel source) {
+            return new Order(source);
+        }
+
+        @Override
+        public Order[] newArray(int size) {
+            return new Order[size];
+        }
+    };
 }

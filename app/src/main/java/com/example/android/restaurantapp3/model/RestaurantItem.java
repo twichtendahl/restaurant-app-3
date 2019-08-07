@@ -1,8 +1,12 @@
 package com.example.android.restaurantapp3.model;
 
-import java.util.Locale;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class RestaurantItem {
+import java.util.Locale;
+import java.util.UUID;
+
+public class RestaurantItem implements Parcelable {
 
     private String itemId;
     private String itemName;
@@ -15,6 +19,10 @@ public class RestaurantItem {
     }
 
     public RestaurantItem(String itemId, String itemName, String itemDescription, int sortPosition, double itemPrice, String itemImage) {
+        if(itemId == null) {
+            itemId = UUID.randomUUID().toString();
+        }
+
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
@@ -86,4 +94,40 @@ public class RestaurantItem {
     public String getFormattedPrice() {
         return String.format(Locale.getDefault(),"$%2.2f", this.getItemPrice());
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.itemName);
+        dest.writeString(this.itemId);
+        dest.writeString(this.itemDescription);
+        dest.writeInt(this.sortPosition);
+        dest.writeDouble(this.itemPrice);
+        dest.writeString(this.itemImage);
+    }
+
+    protected RestaurantItem(Parcel in) {
+        this.itemName = in.readString();
+        this.itemId = in.readString();
+        this.itemDescription = in.readString();
+        this.sortPosition = in.readInt();
+        this.itemPrice = in.readDouble();
+        this.itemImage = in.readString();
+    }
+
+    public static final Parcelable.Creator<RestaurantItem> CREATOR = new Parcelable.Creator<RestaurantItem>() {
+        @Override
+        public RestaurantItem createFromParcel(Parcel source) {
+            return new RestaurantItem(source);
+        }
+
+        @Override
+        public RestaurantItem[] newArray(int size) {
+            return new RestaurantItem[size];
+        }
+    };
 }

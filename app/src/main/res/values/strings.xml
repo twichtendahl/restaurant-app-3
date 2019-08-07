@@ -9,4 +9,18 @@
     <string name="starting_quantity">Qty: 0</string>
     <string name="submit">Submit</string>
     <string name="li_quantity">Qty: 1</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="subtotal">Subtotal:</string>
+    <string name="example_subtotal">$30.00</string>
+    <string name="example_tax">$3.02</string>
+    <string name="tax_label">Tax:</string>
+    <string name="tip_label">Tip:</string>
+    <string name="example_tip">$4.50</string>
+    <string name="total_label">Total:</string>
+    <string name="sample_total">$37.52</string>
+    <string name="enter_payment">Enter Payment</string>
+    <string name="card_number_label">Card Number:</string>
+    <string name="csc">CSC:</string>
+    <string name="expiration_label">Expiration (mm/yy):</string>
+    <string name="send_order">Send Order</string>
 </resources>

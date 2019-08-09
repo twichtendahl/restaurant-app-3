@@ -63,7 +63,7 @@ public class RestaurantItemAdapter extends RecyclerView.Adapter<RestaurantItemAd
             public void onClick(View v) {
                 if(mContext instanceof MainActivity) {
                     ((MainActivity)mContext).order.addItem(item);
-                    holder.tvQuantity.setText(((MainActivity)mContext).order.formattedCountOf(item));
+                    holder.tvQuantity.setText(((MainActivity)mContext).order.getFormattedCountOf(item));
                 }
             }
         });
@@ -72,8 +72,8 @@ public class RestaurantItemAdapter extends RecyclerView.Adapter<RestaurantItemAd
             @Override
             public void onClick(View v) {
                 if(mContext instanceof MainActivity) {
-                    ((MainActivity)mContext).order.removeItem(item);
-                    holder.tvQuantity.setText(((MainActivity)mContext).order.formattedCountOf(item));
+                    ((MainActivity)mContext).order.removeItem(item, 1);
+                    holder.tvQuantity.setText(((MainActivity)mContext).order.getFormattedCountOf(item));
                 }
             }
         });

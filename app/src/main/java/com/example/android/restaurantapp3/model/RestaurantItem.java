@@ -130,4 +130,10 @@ public class RestaurantItem implements Parcelable {
             return new RestaurantItem[size];
         }
     };
+
+
+    // Two items are equal that have the same name
+    public boolean equals(RestaurantItem otherItem) {
+        return getItemName().equals(otherItem.getItemName());
+    }
 }

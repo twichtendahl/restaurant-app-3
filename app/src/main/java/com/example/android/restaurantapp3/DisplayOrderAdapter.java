@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.android.restaurantapp3.model.Order;
+import com.example.android.restaurantapp3.model.OrderItem;
 import com.example.android.restaurantapp3.model.RestaurantItem;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,15 +18,15 @@ import java.util.Locale;
 
 public class DisplayOrderAdapter extends RecyclerView.Adapter<DisplayOrderAdapter.ViewHolder> {
 
-    private List<RestaurantItem> mItems;
+    private List<OrderItem> mItems;
     private Context mContext;
     private Order mOrder;
 
-    public DisplayOrderAdapter(List<RestaurantItem> mItems, Context mContext) {
+    public DisplayOrderAdapter(List<OrderItem> mItems, Context mContext) {
         this.mItems = mItems;
         this.mContext = mContext;
         mOrder = new Order();
-        mOrder.addItems(mItems);
+        mOrder.addOrderItems(mItems);
     }
 
     public Order getmOrder() {
@@ -55,12 +56,11 @@ public class DisplayOrderAdapter extends RecyclerView.Adapter<DisplayOrderAdapte
     @SuppressLint("DefaultLocale")
     @Override
     public void onBindViewHolder(@NonNull final DisplayOrderAdapter.ViewHolder holder, int position) {
-        final RestaurantItem item = mItems.get(position);
+        final OrderItem item = mItems.get(position);
 
-        holder.liName.setText(item.getItemName());
-        holder.liQuantity.setText(getmOrder().getFormattedCountOf(item.getItemName()));
-        double price = getmOrder().countThisItem(item) * item.getItemPrice();
-        holder.liPrice.setText(String.format(Locale.getDefault(),"$%4.2f", price));
+        holder.liName.setText(item.getItem().getItemName());
+        holder.liQuantity.setText(item.getQuantity());
+        holder.liPrice.setText(String.format(Locale.getDefault(),"$%4.2f", item.price()));
     }
 
     @Override

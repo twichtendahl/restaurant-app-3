@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.android.restaurantapp3.model.Order;
+import com.example.android.restaurantapp3.model.OrderItem;
 import com.example.android.restaurantapp3.model.RestaurantItem;
 
 import java.util.Iterator;
@@ -25,7 +26,7 @@ public class OrderDisplay extends AppCompatActivity {
         setContentView(R.layout.activity_order_display);
 
         Order order = getIntent().getExtras().getParcelable(MainActivity.ORDER_KEY);
-        List<RestaurantItem> orderedItems = order.getItems();
+        List<OrderItem> orderedItems = order.getItems();
         DisplayOrderAdapter adapter = new DisplayOrderAdapter(orderedItems, this);
         RecyclerView recyclerView = findViewById(R.id.rvOrderDisplay);
         recyclerView.setAdapter(adapter);

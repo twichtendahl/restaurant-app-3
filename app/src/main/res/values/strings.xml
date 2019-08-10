@@ -32,4 +32,5 @@
     <string name="sample_csc">012</string>
     <string name="confirm_expiration_date_label">Exp:</string>
     <string name="sample_expiry">09/19</string>
+    <string name="default_tip">0.00</string>
 </resources>

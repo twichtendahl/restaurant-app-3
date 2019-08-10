@@ -3,6 +3,9 @@ package com.example.android.restaurantapp3.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.android.restaurantapp3.OrderDisplay;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +16,8 @@ public class Order implements Parcelable {
     private static double DEFAULT_TAX = 10.5;
     private static double DEFAULT_TIP = 0.0;
     private ArrayList<RestaurantItem> items;
+
+    DecimalFormat df = new DecimalFormat("####0.00");
 
     public Order(ArrayList<RestaurantItem> items) {
         this.items = items;
@@ -59,15 +64,20 @@ public class Order implements Parcelable {
         for(RestaurantItem item : items) {
             subtotal += item.getItemPrice();
         }
-        return subtotal;
+        return Double.valueOf(df.format(subtotal));
     }
 
-    public double getTotal(double tax, double tip) {
-        return getSubtotal() * (1 + (tax/10)) + tip;
+    public double getTax(){
+//        return getSubtotal() * (DEFAULT_TAX / 100);
+        return Double.valueOf(df.format(getSubtotal() * (DEFAULT_TAX / 100)));
     }
 
-    public String getFormattedTotal() {
-        return String.format(Locale.getDefault(),"$%4.2f", getTotal(DEFAULT_TAX, DEFAULT_TIP));
+    public double getTotal( double tip) {
+        return Double.valueOf(df.format(getSubtotal() + getTax() + tip));
+    }
+
+    public String getFormattedTotal(double tip) {
+        return String.format(Locale.getDefault(),"$%4.2f", getTotal(tip));
     }
 
     public void removeAll(RestaurantItem itemToRemove) {

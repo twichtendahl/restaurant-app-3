@@ -5,109 +5,114 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".OrderDisplay">
+
     <TextView
         android:id="@+id/summary"
-        android:text="@string/order_summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center_horizontal"
+        android:text="@string/order_summary"
         app:layout_constraintStart_toStartOf="parent"
-        android:gravity="center_horizontal"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvOrderDisplay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/summary"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/summary" />
+
     <TextView
         android:id="@+id/subtotalLabel"
-        android:text="@string/subtotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/rvOrderDisplay"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="24dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"/>
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/subtotal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rvOrderDisplay" />
+
     <TextView
         android:id="@+id/subtotal"
-        android:text="@string/example_subtotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/subtotalLabel"
-        app:layout_constraintBaseline_toBaselineOf="@id/subtotalLabel"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"/>
+        android:layout_marginLeft="8dp"
+        android:text="@string/example_subtotal"
+        app:layout_constraintBaseline_toBaselineOf="@id/subtotalLabel"
+        app:layout_constraintStart_toEndOf="@id/subtotalLabel" />
+
     <TextView
         android:id="@+id/taxLabel"
-        android:text="@string/tax_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/subtotalLabel"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"/>
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/tax_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/subtotalLabel" />
+
     <TextView
         android:id="@+id/tax"
-        android:text="@string/example_tax"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/subtotal"
-        app:layout_constraintBaseline_toBaselineOf="@id/taxLabel"/>
+        android:text="@string/example_tax"
+        app:layout_constraintBaseline_toBaselineOf="@id/taxLabel"
+        app:layout_constraintEnd_toEndOf="@id/subtotal" />
+
     <TextView
         android:id="@+id/tipLabel"
-        android:text="@string/tip_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/taxLabel"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp" />
-    <TextView
-        android:id="@+id/tip"
-        android:text="@string/example_tip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/subtotal"
-        app:layout_constraintBaseline_toBaselineOf="@id/tipLabel"/>
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/tip_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/taxLabel" />
+
     <TextView
         android:id="@+id/orderTotalLabel"
-        android:text="@string/total_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tipLabel"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"/>
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/total_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tipLabel" />
+
     <TextView
         android:id="@+id/total"
-        android:text="@string/sample_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/subtotal"
-        app:layout_constraintBaseline_toBaselineOf="@id/orderTotalLabel"/>
+        android:text="@string/sample_total"
+        app:layout_constraintBaseline_toBaselineOf="@id/orderTotalLabel"
+        app:layout_constraintEnd_toEndOf="@id/subtotal" />
+
     <TextView
         android:id="@+id/paymentLabel"
-        android:text="@string/enter_payment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/orderTotalLabel"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="24dp"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal"
+        android:text="@string/enter_payment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/orderTotalLabel" />
+
     <TextView
         android:id="@+id/creditCardLabel"
-        android:text="@string/card_number_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/paymentLabel"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="24dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"/>
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/card_number_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/paymentLabel" />
+
     <EditText
         android:id="@+id/creditCard"
         android:layout_width="wrap_content"
@@ -116,59 +121,76 @@
         android:layout_marginLeft="48dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintStart_toEndOf="@+id/creditCardLabel"
-        app:layout_constraintBaseline_toBaselineOf="@id/creditCardLabel" />
+        app:layout_constraintBaseline_toBaselineOf="@id/creditCardLabel"
+        app:layout_constraintStart_toEndOf="@+id/creditCardLabel" />
+
     <TextView
         android:id="@+id/cscLabel"
-        android:text="@string/csc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/creditCardLabel"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="24dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"/>
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/csc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/creditCardLabel" />
+
     <EditText
         android:id="@+id/csc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/creditCard"
         android:ems="4"
         android:inputType="number"
-        app:layout_constraintBaseline_toBaselineOf="@id/cscLabel"/>
+        app:layout_constraintBaseline_toBaselineOf="@id/cscLabel"
+        app:layout_constraintStart_toStartOf="@id/creditCard" />
+
     <TextView
         android:id="@+id/expirationDateLabel"
-        android:text="@string/expiration_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/cscLabel"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="24dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"/>
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/expiration_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cscLabel" />
+
     <EditText
         android:id="@+id/month"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/creditCard"
         android:ems="2"
         android:inputType="number"
-        app:layout_constraintBaseline_toBaselineOf="@id/expirationDateLabel"/>
+        app:layout_constraintBaseline_toBaselineOf="@id/expirationDateLabel"
+        app:layout_constraintStart_toStartOf="@id/creditCard" />
+
     <EditText
         android:id="@+id/year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/month"
         android:ems="2"
         android:inputType="number"
-        app:layout_constraintBaseline_toBaselineOf="@id/expirationDateLabel"/>
+        app:layout_constraintBaseline_toBaselineOf="@id/expirationDateLabel"
+        app:layout_constraintStart_toEndOf="@id/month" />
+
     <Button
         android:id="@+id/finalizeOrder"
-        android:text="@string/send_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/expirationDateLabel"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:text="@string/send_order"
+        app:layout_constraintTop_toBottomOf="@id/expirationDateLabel" />
+
+    <EditText
+        android:id="@+id/tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="5"
+        android:inputType="numberDecimal"
+        android:text="@string/default_tip"
+        app:layout_constraintStart_toEndOf="@id/tipLabel"
+        app:layout_constraintBaseline_toBaselineOf="@id/tipLabel"
+        app:layout_constraintStart_toStartOf="@id/subtotal"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -59,7 +59,7 @@ public class DisplayOrderAdapter extends RecyclerView.Adapter<DisplayOrderAdapte
         final OrderItem item = mItems.get(position);
 
         holder.liName.setText(item.getItem().getItemName());
-        holder.liQuantity.setText(item.getQuantity());
+        holder.liQuantity.setText(Integer.toString(item.getQuantity()));
         holder.liPrice.setText(String.format(Locale.getDefault(),"$%4.2f", item.price()));
     }
 

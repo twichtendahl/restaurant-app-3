@@ -2,7 +2,6 @@ package com.example.android.restaurantapp3.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -10,8 +9,8 @@ import java.util.Locale;
 
 public class Order implements Parcelable {
 
-    private static double DEFAULT_TAX = 10.5;
-    private static double DEFAULT_TIP = 0.0;
+    public static double DEFAULT_TAX = 10.5;
+    public static double DEFAULT_TIP = 0.0;
     private ArrayList<OrderItem> items;
 
     public Order(ArrayList<OrderItem> items) {
@@ -19,7 +18,7 @@ public class Order implements Parcelable {
     }
 
     public Order() {
-        this.items = new ArrayList<OrderItem>();
+        this.items = new ArrayList<>();
     }
 
     public ArrayList<OrderItem> getItems() {
@@ -32,8 +31,8 @@ public class Order implements Parcelable {
 
     public boolean itemIsOnOrder(RestaurantItem itemToFind) {
         boolean itemIsOnOrder = false;
-        for (OrderItem item : getItems()) {
-            if (item.equals(itemToFind)) {
+        for (OrderItem orderItem : items) {
+            if (orderItem.getItem().equals(itemToFind)) {
                 itemIsOnOrder = true;
             }
         }
@@ -42,10 +41,14 @@ public class Order implements Parcelable {
 
     public void addItem(RestaurantItem toAdd) {
         // Bump quantity by 1 if item is on order
-        if(itemIsOnOrder(toAdd)) {
-            items.get(items.indexOf(toAdd)).adjustQuantity(1);
-        } else { //Add to order for first time
+        if(!itemIsOnOrder(toAdd)) {
             items.add(new OrderItem(toAdd));
+        } else {
+            for (OrderItem orderItem : items) {
+                if (orderItem.getItem().equals(toAdd)) {
+                    orderItem.adjustQuantity(1);
+                }
+            }
         }
     }
 
@@ -55,12 +58,8 @@ public class Order implements Parcelable {
         }
     }
 
-    public void addOrderItems(List<OrderItem> items) {
-        for(OrderItem item : items) {
-            for(int i = 0; i < item.getQuantity(); i++) {
-                addItem(item.getItem());
-            }
-        }
+    public void addOrderItems(List<OrderItem> orderItems) {
+        items.addAll(orderItems);
     }
 
     public void removeItem(RestaurantItem itemToRemove, int amountToRemove) {
@@ -72,8 +71,8 @@ public class Order implements Parcelable {
     }
 
     public int getCountOf(RestaurantItem toCount) {
-        for(OrderItem item : getItems()) {
-            if(item.equals(toCount)) {
+        for(OrderItem item : items) {
+            if(item.getItem().equals(toCount)) {
                 return item.getQuantity();
             }
         }
@@ -93,21 +92,15 @@ public class Order implements Parcelable {
     }
 
     public double getTotal(double tax, double tip) {
-        return getSubtotal() * (1 + (tax/10)) + tip;
+        return getSubtotal() * (1 + (tax/100)) + tip;
     }
 
-    public String getFormattedTotal() {
-        return String.format(Locale.getDefault(),"$%4.2f", getTotal(DEFAULT_TAX, DEFAULT_TIP));
+    public String getFormattedTotal(double tax, double tip) {
+        return String.format(Locale.getDefault(),"$%4.2f", getTotal(tax, tip));
     }
 
     public void removeAll(RestaurantItem itemToRemove) {
-        Iterator<OrderItem> iterator = items.iterator();
-        while(iterator.hasNext()) {
-            OrderItem item = iterator.next();
-            if(item.getItem().equals(itemToRemove)) {
-                iterator.remove();
-            }
-        }
+        removeItem(itemToRemove, getCountOf(itemToRemove));
     }
 
     @Override

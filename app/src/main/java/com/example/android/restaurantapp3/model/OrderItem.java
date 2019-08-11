@@ -2,7 +2,6 @@ package com.example.android.restaurantapp3.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import java.util.Locale;
 
 public class OrderItem implements Parcelable {
@@ -15,7 +14,7 @@ public class OrderItem implements Parcelable {
     }
 
     public OrderItem(RestaurantItem item) {
-        this(item, 0);
+        this(item, 1);
     }
 
     public RestaurantItem getItem() {
@@ -69,16 +68,16 @@ public class OrderItem implements Parcelable {
     }
 
     public double price() {
-        return getItem().getItemPrice() * getQuantity();
+        return item.getItemPrice() * quantity;
     }
 
     public String formattedPrice() {
         return String.format(Locale.getDefault(), "$%4.2f", price());
     }
 
-    public String formattedQuantity() { return "Qty: " + getQuantity(); }
+    public String formattedQuantity() { return "Qty: " + quantity; }
 
     public void adjustQuantity(int adjustment) {
-        setQuantity(getQuantity() + adjustment);
+        setQuantity(quantity + adjustment);
     }
 }

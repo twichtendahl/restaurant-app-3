@@ -65,8 +65,9 @@
         android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp" />
-    <TextView
+    <EditText
         android:id="@+id/tip"
+        android:inputType="number"
         android:text="@string/example_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -91,14 +91,6 @@ public class Order implements Parcelable {
         return subtotal;
     }
 
-    public double getTotal(double tax, double tip) {
-        return getSubtotal() * (1 + (tax/100)) + tip;
-    }
-
-    public String getFormattedTotal(double tax, double tip) {
-        return String.format(Locale.getDefault(),"$%4.2f", getTotal(tax, tip));
-    }
-
     public void removeAll(RestaurantItem itemToRemove) {
         removeItem(itemToRemove, getCountOf(itemToRemove));
     }

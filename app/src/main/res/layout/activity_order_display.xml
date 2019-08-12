@@ -67,7 +67,7 @@
         android:layout_marginLeft="8dp" />
     <EditText
         android:id="@+id/tip"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:text="@string/example_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

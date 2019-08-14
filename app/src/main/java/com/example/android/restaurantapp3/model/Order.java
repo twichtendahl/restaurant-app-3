@@ -3,20 +3,15 @@ package com.example.android.restaurantapp3.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
 public class Order implements Parcelable {
 
-    public static double DEFAULT_TAX = 10.5;
-    public static double DEFAULT_TIP = 0.0;
     private ArrayList<OrderItem> items;
 
     public Order(ArrayList<OrderItem> items) {
         this.items = items;
     }
-
     public Order() {
         this.items = new ArrayList<>();
     }
@@ -24,7 +19,6 @@ public class Order implements Parcelable {
     public ArrayList<OrderItem> getItems() {
         return items;
     }
-
     public void setItems(ArrayList<OrderItem> items) {
         this.items = items;
     }

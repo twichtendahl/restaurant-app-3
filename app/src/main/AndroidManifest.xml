@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".OrderConfirmation"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".OrderDisplay">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".OrderDisplay" />
         </activity>
         <activity
             android:name=".OrderDisplay"

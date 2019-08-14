@@ -20,15 +20,27 @@ import com.example.android.restaurantapp3.model.RestaurantItem;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 public class OrderDisplay extends AppCompatActivity {
 
     Order order;
     Payment payment;
+
+    // Subtotal, tip, tax, and total widgets
     Button submitOrder;
     EditText tipEntry;
     TextView subTotal;
     TextView orderTotal;
+
+    // Credit Card, CSC, and expiration widgets
+    EditText creditCard;
+    EditText csc;
+    EditText expMonth;
+    EditText expYear;
+
+    // Key for Payment object parcel
+    public static final String PAYMENT_KEY = "payment_key";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +78,26 @@ public class OrderDisplay extends AppCompatActivity {
             }
         });
 
+        // Initialize payment method widgets
+        // Create on-click for submitting order
+        creditCard = findViewById(R.id.creditCard);
+        csc = findViewById(R.id.csc);
+        expMonth = findViewById(R.id.month);
+        expYear = findViewById(R.id.year);
         submitOrder = findViewById(R.id.finalizeOrder);
-//        submitOrder.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
+        submitOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                payment.setCardNumber(creditCard.getText().toString());
+                payment.setCsc(csc.getText().toString());
+                payment.setExpMonth(expMonth.getText().toString());
+                payment.setExpYear(expYear.getText().toString());
+                payment.setConfirmation(UUID.randomUUID().toString());
+
+                Intent intent = new Intent(OrderDisplay.this, OrderConfirmation.class);
+                intent.putExtra(PAYMENT_KEY, payment);
+                startActivity(intent);
+            }
+        });
     }
 }

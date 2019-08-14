@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.android.restaurantapp3.model.Payment;
 
+import java.lang.reflect.Array;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -31,6 +32,9 @@ public class PaymentActivity extends AppCompatActivity {
     EditText csc;
     EditText expMonth;
     EditText expYear;
+
+    public static final String PAYMENT_STRING_KEY = "payment_string_key";
+    public static final String SENDER = "sender_key";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +81,13 @@ public class PaymentActivity extends AppCompatActivity {
                 payment.setExpYear(expYear.getText().toString());
                 payment.setConfirmation(UUID.randomUUID().toString());
 
+                String textToSend = payment.toString();
+
                 // Send payment data to separate app
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(OrderDisplay.PAYMENT_KEY, payment);
+                intent.putExtra(PAYMENT_STRING_KEY, textToSend);
+                intent.putExtra(SENDER, "Restaurant App 3");
                 intent.setType("text/plain");
                 startActivity(intent);
             }

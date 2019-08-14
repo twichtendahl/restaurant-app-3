@@ -22,13 +22,14 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String ORDER_KEY = "order_key";
     List<RestaurantItem> restaurantItemList = SampleDataProvider.restaurantItemList;
-    Order order = new Order();
+    Order order;
     Button submit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        order = new Order();
 
         Collections.sort(restaurantItemList, new Comparator<RestaurantItem>() {
             @Override

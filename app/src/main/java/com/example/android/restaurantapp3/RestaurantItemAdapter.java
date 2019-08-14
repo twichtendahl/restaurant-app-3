@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.android.restaurantapp3.model.Order;
 import com.example.android.restaurantapp3.model.RestaurantItem;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,6 +44,7 @@ public class RestaurantItemAdapter extends RecyclerView.Adapter<RestaurantItemAd
         holder.tvName.setText(item.getItemName());
         holder.tvDescription.setText(item.getItemDescription());
         holder.tvPrice.setText(item.getFormattedPrice());
+        holder.tvQuantity.setText(R.string.starting_quantity);
 
         try {
             String imageFile = item.getItemImage();

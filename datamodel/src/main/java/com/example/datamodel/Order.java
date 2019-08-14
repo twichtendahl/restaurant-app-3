@@ -1,7 +1,8 @@
-package com.example.android.restaurantapp3.model;
+package com.example.datamodel;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,7 +115,7 @@ public class Order implements Parcelable {
         this.items = in.createTypedArrayList(OrderItem.CREATOR);
     }
 
-    public static final Parcelable.Creator<Order> CREATOR = new Parcelable.Creator<Order>() {
+    public static final Creator<Order> CREATOR = new Creator<Order>() {
         @Override
         public Order createFromParcel(Parcel source) {
             return new Order(source);

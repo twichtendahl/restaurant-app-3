@@ -1,7 +1,8 @@
-package com.example.android.restaurantapp3.model;
+package com.example.datamodel;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import java.util.Locale;
 
 public class OrderItem implements Parcelable {
@@ -50,7 +51,7 @@ public class OrderItem implements Parcelable {
         this.quantity = in.readInt();
     }
 
-    public static final Parcelable.Creator<OrderItem> CREATOR = new Parcelable.Creator<OrderItem>() {
+    public static final Creator<OrderItem> CREATOR = new Creator<OrderItem>() {
         @Override
         public OrderItem createFromParcel(Parcel source) {
             return new OrderItem(source);

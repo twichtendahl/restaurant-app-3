@@ -1,4 +1,4 @@
-package com.example.android.restaurantapp3.model;
+package com.example.datamodel;
 
 import android.os.Parcel;
 import android.os.Parcelable;

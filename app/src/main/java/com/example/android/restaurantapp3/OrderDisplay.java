@@ -51,6 +51,7 @@ public class OrderDisplay extends AppCompatActivity {
         dineIn = findViewById(R.id.dineIn);
         takeOut = findViewById(R.id.takeOut);
         delivery = findViewById(R.id.delivery);
+        next = findViewById(R.id.finalizeOrder);
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -31,7 +31,7 @@ public class OrderConfirmation extends AppCompatActivity {
         cscConfirm = findViewById(R.id.cscConfirm);
         expiryConfirm = findViewById(R.id.expiryConfirm);
 
-        // Populate with data from Payment
+        // Populate with data from PaymentActivity
         confirmationCode.setText(payment.getConfirmation());
         creditCardConfirm.setText(payment.getCardNumber());
         cscConfirm.setText(payment.getCsc());

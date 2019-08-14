@@ -5,41 +5,30 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.example.android.restaurantapp3.model.Order;
 import com.example.android.restaurantapp3.model.OrderItem;
 import com.example.android.restaurantapp3.model.Payment;
-import com.example.android.restaurantapp3.model.RestaurantItem;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
 
 public class OrderDisplay extends AppCompatActivity {
 
     Order order;
     Payment payment;
 
-    // Subtotal, tip, tax, and total widgets
-    Button submitOrder;
-    EditText tipEntry;
-    TextView subTotal;
-    TextView orderTotal;
+    RadioGroup method;
+    RadioButton radioButton;
+    RadioButton dineIn;
+    RadioButton takeOut;
+    RadioButton delivery;
+    Button next;
 
-    // Credit Card, CSC, and expiration widgets
-    EditText creditCard;
-    EditText csc;
-    EditText expMonth;
-    EditText expYear;
-
-    // Key for Payment object parcel
+    // Key for PaymentActivity object parcel
     public static final String PAYMENT_KEY = "payment_key";
 
     @Override
@@ -54,49 +43,35 @@ public class OrderDisplay extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.rvOrderDisplay);
         recyclerView.setAdapter(adapter);
 
-        // Create Payment based on Order
+        // Create PaymentActivity based on Order
         payment = new Payment(order);
 
-        // Initialize order subtotal and total
-        subTotal = findViewById(R.id.subtotal);
-        subTotal.setText(String.format(Locale.getDefault(), "$%4.2f", order.getSubtotal()));
-        orderTotal = findViewById(R.id.total);
-        orderTotal.setText(payment.formattedTotal());
+        // Assemble fulfillment method selection views
+        method = findViewById(R.id.fulfillmentMethod);
+        dineIn = findViewById(R.id.dineIn);
+        takeOut = findViewById(R.id.takeOut);
+        delivery = findViewById(R.id.delivery);
 
-        // Create onChanged method for tip entry
-        tipEntry = findViewById(R.id.tip);
-        tipEntry.addTextChangedListener(new TextWatcher() {
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onClick(View v) {
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                // Discover user's choice of fulfillment method
+                int radioId = method.getCheckedRadioButtonId();
+                radioButton = findViewById(radioId);
+                String methodName = radioButton.getText().toString();
+                if (methodName.equals("Dine In")) {
+                    payment.setMethod(Payment.DINE_IN);
+                } else if (methodName.equals("Take-out")) {
+                    payment.setMethod(Payment.TAKE_OUT);
+                } else {
+                    payment.setMethod(Payment.DELIVERY);
+                }
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                payment.setTip(Double.parseDouble(s.toString()));
-            }
-        });
-
-        // Initialize payment method widgets
-        // Create on-click for submitting order
-        creditCard = findViewById(R.id.creditCard);
-        csc = findViewById(R.id.csc);
-        expMonth = findViewById(R.id.month);
-        expYear = findViewById(R.id.year);
-        submitOrder = findViewById(R.id.finalizeOrder);
-        submitOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                payment.setCardNumber(creditCard.getText().toString());
-                payment.setCsc(csc.getText().toString());
-                payment.setExpMonth(expMonth.getText().toString());
-                payment.setExpYear(expYear.getText().toString());
-                payment.setConfirmation(UUID.randomUUID().toString());
-
-                Intent intent = new Intent(OrderDisplay.this, OrderConfirmation.class);
+                Intent intent = new Intent(OrderDisplay.this, PaymentActivity.class);
                 intent.putExtra(PAYMENT_KEY, payment);
                 startActivity(intent);
+
             }
         });
     }

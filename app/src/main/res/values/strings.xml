@@ -9,7 +9,6 @@
     <string name="starting_quantity">Qty: 0</string>
     <string name="submit">Submit</string>
     <string name="li_quantity">Qty: 1</string>
-    <string name="order_summary">Order Summary</string>
     <string name="subtotal">Subtotal:</string>
     <string name="example_subtotal">$30.00</string>
     <string name="example_tax">$3.02</string>
@@ -36,4 +35,12 @@
     <string name="dine_in">Dine In</string>
     <string name="take_out">Take-out</string>
     <string name="delivery">Delivery</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="delivery_charge">Delivery:</string>
+    <string name="sample_delivery">$5.00</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="back">Back</string>
+    <string name="confirm">Confirm</string>
+    <string name="method">Method:</string>
+    <string name="next">Next</string>
 </resources>

@@ -14,16 +14,21 @@ public class Payment implements Parcelable {
     private String expMonth;
     private String expYear;
     private String confirmation;
+    private String method;
 
     public static final double DEFAULT_TAX = 10.5;
     public static final double DEFAULT_TIP = 0.0;
+    public static final double DEFAULT_DELIVERY_FEE = 5.0;
     public static final String NOT_CONFIRMED = "Not Confirmed";
     public static final String NO_CARD = "No Credit Card";
     public static final String NO_CSC = "No CSC";
     public static final String NO_MONTH = "No Month";
     public static final String NO_YEAR = "No Year";
+    public static final String DINE_IN = "Dine In";
+    public static final String TAKE_OUT = "Take-out";
+    public static final String DELIVERY = "Delivery";
 
-    public Payment(Order order, double tax, double tip, String cardNumber, String csc, String expMonth, String expYear) {
+    public Payment(Order order, double tax, double tip, String cardNumber, String csc, String expMonth, String expYear, String method) {
         this.order = order;
         this.tax = tax;
         this.tip = tip;
@@ -31,11 +36,12 @@ public class Payment implements Parcelable {
         this.csc = csc;
         this.expMonth = expMonth;
         this.expYear = expYear;
+        this.method = method;
         this.confirmation = NOT_CONFIRMED;
     }
 
     public Payment(Order order, String cardNumber, String csc, String expMonth, String expYear) {
-        this(order, DEFAULT_TAX, DEFAULT_TIP, cardNumber, csc, expMonth, expYear);
+        this(order, DEFAULT_TAX, DEFAULT_TIP, cardNumber, csc, expMonth, expYear, DINE_IN);
     }
 
     public Payment(Order order) {
@@ -106,12 +112,29 @@ public class Payment implements Parcelable {
         this.confirmation = confirmation;
     }
 
-    public double total() {
-            return order.getSubtotal() * (1 + (tax/100)) + tip;
+    public String getMethod() {
+        return method;
     }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public double total() {
+            double total = order.getSubtotal() * (1 + (tax/100)) + tip;
+            if(getMethod().equals(DELIVERY)) { total += DEFAULT_DELIVERY_FEE; }
+            return total;    }
 
     public String formattedTotal() {
         return String.format(Locale.getDefault(),"$%4.2f", total());
+    }
+
+    public double taxAmount() {
+        return order.getSubtotal() * tax / 100;
+    }
+
+    public String formattedTaxAmount() {
+        return String.format(Locale.getDefault(),"$%4.2f", taxAmount());
     }
 
 
@@ -130,6 +153,7 @@ public class Payment implements Parcelable {
         dest.writeString(this.expMonth);
         dest.writeString(this.expYear);
         dest.writeString(this.confirmation);
+        dest.writeString(this.method);
     }
 
     protected Payment(Parcel in) {
@@ -141,6 +165,7 @@ public class Payment implements Parcelable {
         this.expMonth = in.readString();
         this.expYear = in.readString();
         this.confirmation = in.readString();
+        this.method = in.readString();
     }
 
     public static final Creator<Payment> CREATOR = new Creator<Payment>() {

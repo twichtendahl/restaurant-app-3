@@ -33,4 +33,7 @@
     <string name="confirm_expiration_date_label">Exp:</string>
     <string name="sample_expiry">09/19</string>
     <string name="test">test</string>
+    <string name="dine_in">Dine In</string>
+    <string name="take_out">Take-out</string>
+    <string name="delivery">Delivery</string>
 </resources>

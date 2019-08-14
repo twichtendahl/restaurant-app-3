@@ -6,6 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".OrderConfirmation">
 
+    <RadioGroup
+        android:id="@+id/fulfillmentMethod"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <RadioButton android:id="@+id/dineIn"
+            android:text="@string/dine_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton android:id="@+id/takeOut"
+            android:text="@string/take_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton android:id="@+id/delivery"
+            android:text="@string/delivery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RadioGroup>
+
     <TextView
         android:id="@+id/thanksMessage"
         android:layout_width="wrap_content"
@@ -17,6 +41,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"/>
+
     <TextView
         android:id="@+id/confirmationCodeLabel"
         android:layout_width="wrap_content"
@@ -89,5 +114,4 @@
         android:text="@string/sample_expiry"
         app:layout_constraintStart_toStartOf="@id/creditConfirm"
         app:layout_constraintBaseline_toBaselineOf="@id/expiryConfirmLabel"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

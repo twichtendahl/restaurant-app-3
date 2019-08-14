@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".OrderConfirmation">
-
     <TextView
         android:id="@+id/thanksMessage"
         android:layout_width="wrap_content"
@@ -89,5 +88,4 @@
         android:text="@string/sample_expiry"
         app:layout_constraintStart_toStartOf="@id/creditConfirm"
         app:layout_constraintBaseline_toBaselineOf="@id/expiryConfirmLabel"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,68 +7,72 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.example.android.restaurantapp3.model.Order;
+import com.example.android.restaurantapp3.model.OrderItem;
 import com.example.android.restaurantapp3.model.Payment;
-import com.example.android.restaurantapp3.model.RestaurantItem;
 
-import java.util.Iterator;
 import java.util.List;
 
 public class OrderDisplay extends AppCompatActivity {
-    public static final String PAYMENT_KEY = "payment_key";
-    public static final String ORDER_KEY = "order_key";
 
-
-    Button submitOrder;
-    EditText creditCard;
-    EditText csc;
-    EditText expMonth;
-    EditText expYear;
+    Order order;
     Payment payment;
+
+    RadioGroup method;
+    RadioButton radioButton;
+    RadioButton dineIn;
+    RadioButton takeOut;
+    RadioButton delivery;
+    Button next;
+
+    // Key for PaymentActivity object parcel
+    public static final String PAYMENT_KEY = "payment_key";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_display);
 
-        final Order order = getIntent().getExtras().getParcelable(MainActivity.ORDER_KEY);
-        List<RestaurantItem> orderedItems = order.getItems();
+        // Create RecyclerView for items on order
+        order = getIntent().getExtras().getParcelable(MainActivity.ORDER_KEY);
+        List<OrderItem> orderedItems = order.getItems();
         DisplayOrderAdapter adapter = new DisplayOrderAdapter(orderedItems, this);
         RecyclerView recyclerView = findViewById(R.id.rvOrderDisplay);
         recyclerView.setAdapter(adapter);
 
-        submitOrder = findViewById(R.id.finalizeOrder);
-        creditCard = findViewById(R.id.creditCard);
-        csc = findViewById(R.id.csc);
-        expMonth = findViewById(R.id.month);
-        expYear = findViewById(R.id.year);
-        payment = new Payment();
+        // Create PaymentActivity based on Order
+        payment = new Payment(order);
 
-        submitOrder.setOnClickListener(new View.OnClickListener() {
+        // Assemble fulfillment method selection views
+        method = findViewById(R.id.fulfillmentMethod);
+        dineIn = findViewById(R.id.dineIn);
+        takeOut = findViewById(R.id.takeOut);
+        delivery = findViewById(R.id.delivery);
+        next = findViewById(R.id.finalizeOrder);
+
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                if(creditCard.getText() == null ||
-                csc.getText() == null ||
-                expMonth == null ||
-                expYear == null) {
-                    Toast.makeText(OrderDisplay.this, "Please input all required data.", Toast.LENGTH_LONG).show();
-                } else {
-                    payment.setCardNumber(Integer.parseInt(creditCard.getText().toString()));
-                    payment.setCsc(Integer.parseInt(csc.getText().toString()));
-                    payment.setExpMonth(Integer.parseInt(expMonth.getText().toString()));
-                    payment.setExpYear(Integer.parseInt(expYear.getText().toString()));
+            public void onClick(View v) {
 
-                    Intent intent = new Intent(OrderDisplay.this, OrderConfirmation.class);
-                    Bundle extras = new Bundle();
-                    extras.putParcelable(PAYMENT_KEY, payment);
-                    extras.putParcelable(ORDER_KEY, order);
-                    intent.putExtras(extras);
-                    startActivity(intent);
+                // Discover user's choice of fulfillment method
+                int radioId = method.getCheckedRadioButtonId();
+                radioButton = findViewById(radioId);
+                String methodName = radioButton.getText().toString();
+                if (methodName.equals("Dine In")) {
+                    payment.setMethod(Payment.DINE_IN);
+                } else if (methodName.equals("Take-out")) {
+                    payment.setMethod(Payment.TAKE_OUT);
+                } else {
+                    payment.setMethod(Payment.DELIVERY);
                 }
+
+                Intent intent = new Intent(OrderDisplay.this, PaymentActivity.class);
+                intent.putExtra(PAYMENT_KEY, payment);
+                startActivity(intent);
+
             }
         });
     }

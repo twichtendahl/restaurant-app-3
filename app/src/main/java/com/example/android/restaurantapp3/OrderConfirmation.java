@@ -7,26 +7,36 @@ import android.widget.TextView;
 
 import com.example.android.restaurantapp3.model.Payment;
 
+import java.util.Locale;
+
 public class OrderConfirmation extends AppCompatActivity {
-    TextView orderConfirmationCode = findViewById(R.id.confirmationCode);
-    TextView creditCardConfirmation = findViewById(R.id.creditConfirm);
-    TextView cscConfirmation = findViewById(R.id.cscConfirm);
-    TextView expConfirmation = findViewById(R.id.expiryConfirm);
+    
+    Payment payment;
+    TextView confirmationCode;
+    TextView creditCardConfirm;
+    TextView cscConfirm;
+    TextView expiryConfirm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_confirmation);
+        
+        // Get payment from OrderDisplay activity
+        payment = getIntent().getExtras().getParcelable(OrderDisplay.PAYMENT_KEY);
+        
+        // Access views
+        confirmationCode = findViewById(R.id.confirmationCode);
+        creditCardConfirm = findViewById(R.id.creditConfirm);
+        cscConfirm = findViewById(R.id.cscConfirm);
+        expiryConfirm = findViewById(R.id.expiryConfirm);
 
-        final Payment payment = getIntent().getExtras().getParcelable(OrderDisplay.PAYMENT_KEY);
-        final Payment order = getIntent().getExtras().getParcelable(OrderDisplay.ORDER_KEY);
+        // Populate with data from PaymentActivity
+        confirmationCode.setText(payment.getConfirmation());
+        creditCardConfirm.setText(payment.getCardNumber());
+        cscConfirm.setText(payment.getCsc());
+        expiryConfirm.setText(String.format("%s/%s", payment.getExpMonth(), payment.getExpYear()));
 
-        /*
-        final Order order = getIntent().getExtras().getParcelable(MainActivity.ORDER_KEY);
-        List<RestaurantItem> orderedItems = order.getItems();
-        DisplayOrderAdapter adapter = new DisplayOrderAdapter(orderedItems, this);
-        RecyclerView recyclerView = findViewById(R.id.rvOrderDisplay);
-        recyclerView.setAdapter(adapter);
-         */
+
     }
 }

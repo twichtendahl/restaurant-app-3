@@ -2,36 +2,48 @@ package com.example.android.restaurantapp3.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
 public class Order implements Parcelable {
 
-    private static double DEFAULT_TAX = 10.5;
-    private static double DEFAULT_TIP = 0.0;
-    private ArrayList<RestaurantItem> items;
+    private ArrayList<OrderItem> items;
 
-    public Order(ArrayList<RestaurantItem> items) {
+    public Order(ArrayList<OrderItem> items) {
         this.items = items;
     }
-
     public Order() {
-        this.items = new ArrayList<RestaurantItem>();
+        this.items = new ArrayList<>();
     }
 
-    public ArrayList<RestaurantItem> getItems() {
+    public ArrayList<OrderItem> getItems() {
         return items;
     }
-
-    public void setItems(ArrayList<RestaurantItem> items) {
+    public void setItems(ArrayList<OrderItem> items) {
         this.items = items;
     }
 
-    public void addItem(RestaurantItem item) {
-        items.add(item);
+    public boolean itemIsOnOrder(RestaurantItem itemToFind) {
+        boolean itemIsOnOrder = false;
+        for (OrderItem orderItem : items) {
+            if (orderItem.getItem().equals(itemToFind)) {
+                itemIsOnOrder = true;
+            }
+        }
+        return itemIsOnOrder;
+    }
+
+    public void addItem(RestaurantItem toAdd) {
+        // Bump quantity by 1 if item is on order
+        if(!itemIsOnOrder(toAdd)) {
+            items.add(new OrderItem(toAdd));
+        } else {
+            for (OrderItem orderItem : items) {
+                if (orderItem.getItem().equals(toAdd)) {
+                    orderItem.adjustQuantity(1);
+                }
+            }
+        }
     }
 
     public void addItems(List<RestaurantItem> items) {
@@ -40,68 +52,47 @@ public class Order implements Parcelable {
         }
     }
 
-    public void removeItem(RestaurantItem item) { items.remove(item); }
-
-    public int getCountOf(String itemName) {
-        int count = 0;
-        Iterator<RestaurantItem> iterator = items.iterator();
-        while(iterator.hasNext()) {
-            RestaurantItem item = iterator.next();
-            if(item.getItemName().equals(itemName)) count++;
-        }
-        return count;
+    public void addOrderItems(List<OrderItem> orderItems) {
+        items.addAll(orderItems);
     }
 
-    public String getFormattedCountOf(String itemName) { return "Qty: " + getCountOf(itemName); }
+    public void removeItem(RestaurantItem itemToRemove, int amountToRemove) {
+        for (OrderItem item : items) {
+            if(item.getItem().getItemName().equals(itemToRemove.getItemName())) {
+                item.adjustQuantity(-1 * amountToRemove);
+            }
+        }
+    }
+
+    public int getCountOf(RestaurantItem toCount) {
+        for(OrderItem item : items) {
+            if(item.getItem().equals(toCount)) {
+                return item.getQuantity();
+            }
+        }
+        return 0;
+    }
+
+    public String getFormattedCountOf(RestaurantItem toCount) {
+        return "Qty: " + getCountOf(toCount);
+    }
 
     public double getSubtotal() {
         double subtotal = 0.0;
-        for(RestaurantItem item : items) {
-            subtotal += item.getItemPrice();
+        for(OrderItem item : items) {
+            subtotal += item.price();
         }
         return subtotal;
     }
 
-    public double getTotal(double tax, double tip) {
-        return getSubtotal() * (1 + (tax/10)) + tip;
-    }
-
-    public String getFormattedTotal() {
-        return String.format(Locale.getDefault(),"$%4.2f", getTotal(DEFAULT_TAX, DEFAULT_TIP));
-    }
-
     public void removeAll(RestaurantItem itemToRemove) {
-        Iterator<RestaurantItem> iterator = items.iterator();
-        while(iterator.hasNext()) {
-            RestaurantItem item = iterator.next();
-            if(item.getItemName().equals(itemToRemove.getItemName())) {
-                iterator.remove();
-            }
-        }
-    }
-
-    public int countThisItem(RestaurantItem itemToCount) {
-        int count = 0;
-        Iterator<RestaurantItem> iterator = items.iterator();
-        while(iterator.hasNext()) {
-            RestaurantItem item = iterator.next();
-            if(item.getItemName().equals(itemToCount.getItemName())) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    public String formattedCountOf(RestaurantItem item) {
-        return "Qty: " + countThisItem(item);
+        removeItem(itemToRemove, getCountOf(itemToRemove));
     }
 
     @Override
     public String toString() {
         String orderAsString = "";
-        Iterator<RestaurantItem> iterator = items.iterator();
-        while(iterator.hasNext()) {
-            RestaurantItem item = iterator.next();
+        for (OrderItem item : items) {
             orderAsString += item.toString() + "\n";
         }
         return orderAsString.trim();
@@ -119,7 +110,7 @@ public class Order implements Parcelable {
     }
 
     protected Order(Parcel in) {
-        this.items = in.createTypedArrayList(RestaurantItem.CREATOR);
+        this.items = in.createTypedArrayList(OrderItem.CREATOR);
     }
 
     public static final Parcelable.Creator<Order> CREATOR = new Parcelable.Creator<Order>() {

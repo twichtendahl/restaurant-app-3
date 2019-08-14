@@ -3,21 +3,15 @@ package com.example.android.restaurantapp3;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.android.restaurantapp3.model.RestaurantItem;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -63,7 +57,7 @@ public class RestaurantItemAdapter extends RecyclerView.Adapter<RestaurantItemAd
             public void onClick(View v) {
                 if(mContext instanceof MainActivity) {
                     ((MainActivity)mContext).order.addItem(item);
-                    holder.tvQuantity.setText(((MainActivity)mContext).order.formattedCountOf(item));
+                    holder.tvQuantity.setText(((MainActivity)mContext).order.getFormattedCountOf(item));
                 }
             }
         });
@@ -72,8 +66,8 @@ public class RestaurantItemAdapter extends RecyclerView.Adapter<RestaurantItemAd
             @Override
             public void onClick(View v) {
                 if(mContext instanceof MainActivity) {
-                    ((MainActivity)mContext).order.removeItem(item);
-                    holder.tvQuantity.setText(((MainActivity)mContext).order.formattedCountOf(item));
+                    ((MainActivity)mContext).order.removeItem(item, 1);
+                    holder.tvQuantity.setText(((MainActivity)mContext).order.getFormattedCountOf(item));
                 }
             }
         });
@@ -95,7 +89,6 @@ public class RestaurantItemAdapter extends RecyclerView.Adapter<RestaurantItemAd
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             tvName = itemView.findViewById(R.id.nameLabel);
             imageView = itemView.findViewById(R.id.itemImage);
             tvDescription = itemView.findViewById(R.id.itemDescription);
@@ -103,7 +96,6 @@ public class RestaurantItemAdapter extends RecyclerView.Adapter<RestaurantItemAd
             addButton = itemView.findViewById(R.id.addToOrder);
             removeButton = itemView.findViewById(R.id.removeFromOrder);
             tvQuantity = itemView.findViewById(R.id.quantity);
-
         }
     }
 

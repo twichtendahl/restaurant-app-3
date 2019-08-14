@@ -31,6 +31,10 @@ public class RestaurantItem implements Parcelable {
         this.itemImage = itemImage;
     }
 
+    public RestaurantItem(String itemName, String itemDescription, int sortPosition, double itemPrice, String itemImage) {
+        this(null, itemName, itemDescription, sortPosition, itemPrice, itemImage);
+    }
+
     public String getItemId() {
         return itemId;
     }
@@ -91,10 +95,6 @@ public class RestaurantItem implements Parcelable {
                 '}';
     }
 
-    public String getFormattedPrice() {
-        return String.format(Locale.getDefault(),"$%2.2f", this.getItemPrice());
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -130,4 +130,14 @@ public class RestaurantItem implements Parcelable {
             return new RestaurantItem[size];
         }
     };
+
+
+    // Two items are equal that have the same name
+    public boolean equals(RestaurantItem otherItem) {
+        return getItemName().equals(otherItem.getItemName());
+    }
+
+    public String getFormattedPrice() {
+        return String.format(Locale.getDefault(),"$%2.2f", itemPrice);
+    }
 }

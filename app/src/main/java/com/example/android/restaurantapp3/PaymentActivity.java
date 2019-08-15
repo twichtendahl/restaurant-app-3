@@ -26,6 +26,7 @@ public class PaymentActivity extends AppCompatActivity {
     TextView tax;
     TextView subTotal;
     TextView orderTotal;
+    TextView fulfillmentMethod;
 
     // Credit Card, CSC, and expiration widgets
     EditText creditCard;
@@ -50,6 +51,8 @@ public class PaymentActivity extends AppCompatActivity {
         tax.setText(payment.formattedTaxAmount());
         orderTotal = findViewById(R.id.total);
         orderTotal.setText(payment.formattedTotal());
+        fulfillmentMethod = findViewById(R.id.delivery);
+        fulfillmentMethod.setText(payment.formattedDeliveryAmount());
 
         // Create onChanged method for tip entry
         tipEntry = findViewById(R.id.tip);
@@ -63,6 +66,7 @@ public class PaymentActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 payment.setTip(Double.parseDouble(s.toString()));
+                orderTotal.setText(payment.formattedTotal());
             }
         });
 

@@ -96,7 +96,7 @@ public class Order implements Parcelable {
             orderAsString += item.toString() + ",";
         }
         // Exclude final comma
-        return orderAsString.substring(0, orderAsString.length() - 2);
+        return orderAsString.substring(0, orderAsString.length() - 1);
     }
 
 

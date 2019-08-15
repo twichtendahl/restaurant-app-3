@@ -122,10 +122,9 @@ public class Payment implements Parcelable {
 
     @Override
     public String toString() {
-        String asString = order.toString() + "\n";
+        String asString = order.toString() + "*";
         asString += tax + " " + tip + " " + cardNumber + " " + csc + " " + expMonth + " " + expYear
                 + " " + method + " " + confirmation;
-
         return asString;
     }
 
@@ -144,6 +143,14 @@ public class Payment implements Parcelable {
 
     public String formattedTaxAmount() {
         return String.format(Locale.getDefault(),"$%4.2f", taxAmount());
+    }
+
+    public String formattedDeliveryAmount() {
+        if(method.equals(DELIVERY)) {
+            return String.format(Locale.getDefault(), "$%2.2f", DEFAULT_DELIVERY_FEE);
+        } else {
+            return "$0.00";
+        }
     }
 
 
